@@ -1,6 +1,6 @@
 #### 一、项目功能概述：
 该项目实现的是一个基于`RestOn`智能睡眠监测器的睡眠监测系统。`RestOn`智能睡眠检测器通过`WiFi`模块向服务器的`2016`端口发送数据格式为`H:89;B:13;S：0`（代表心率`89`次/分钟，呼吸`13`次/分钟，状态为床上有人）的数据，本地服务器通过 `GatewayWorker` 来进行接收，解析数据，并存入数据库，本睡眠监测系统可以达到实时监控的目的。
-> `Socket`服务端的端口号可以在`sleep-monitoring\GatewayWorker_sleep\Applications\YourApp\start_gateway.php`当中进行设置。
+> `Socket`服务端的端口号可以在`sleep-monitoring\GatewayWorker_sleep\Applications\YourApp\start_gateway.php`当中进行设置。打开`sleep-monitoring\GatewayWorker_sleep\start_for_win.bat`即可开启`socket`服务端的控制面板。
 #### 二、项目细节展示：
 该项目文件的首页为睡眠监测模块的实时监控页面，如下图所示：
 
