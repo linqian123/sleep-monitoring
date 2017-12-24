@@ -1,0 +1,30 @@
+2017-07-05 11:20:12 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:12 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:13 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:13 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:14 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:14 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:15 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-05 11:20:15 Register auth timeout (127.0.0.1). See http://wiki.workerman.net/Error4 for detail
+2017-07-10 11:37:39 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://wiki.workerman.net/Error3 for detail
+2017-07-10 11:37:39 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://wiki.workerman.net/Error3 for detail
+2017-08-01 03:36:59 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:00 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:01 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:02 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:03 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:04 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:06 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:07 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:08 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:09 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-08-01 03:37:10 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 07:57:05 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://wiki.workerman.net/Error3 for detail
+2017-11-01 07:57:05 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://wiki.workerman.net/Error3 for detail
+2017-11-01 08:16:12 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:13 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:14 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:15 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:16 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:18 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2017-11-01 08:16:19 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0

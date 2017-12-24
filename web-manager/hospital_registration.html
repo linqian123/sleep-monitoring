@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+    <link rel="stylesheet" href="ace/css/ace.min.css" />
+    <link rel="stylesheet" href="ace/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="ace/css/ace-rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/component.css" />
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="ace/js/bootstrap.min.js"></script>
+    <script src="ace/js/ace.min.js"></script>
+    <script src="ace/js/ace-elements.min.js"></script>
+    <script src="ace/js/ace-extra.min.js"></script>
+    <script src="./assets/js/modernizr.custom.js"></script>
+    <style type="text/css">
+    #allmap {width: 100%;height: 200px;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    .bgf8 {
+    background: #f8f8f8;
+        background-color: rgb(248, 248, 248);
+        background-image: none;
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    }
+    .jobList-box {
+        padding: 30px 0 20px;
+        padding-top: 30px;
+        padding-right: 0px;
+        padding-bottom: 20px;
+        padding-left: 0px;
+    }
+    .grid1000 {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 0px;
+        margin-right: auto;
+        margin-bottom: 0px;
+        margin-left: 0px;
+    }
+    .grid1000 h2.title {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 0px;
+        margin-right: auto;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        border-top: solid 6px #2cabbc;
+        border-top-width: 6px;
+        border-top-style: solid;
+        border-top-color: rgb(44, 171, 188);
+    }
+    .grid1000 h2.title span {
+        display: block;
+        width: 120px;
+        height: 44px;
+        background: #2cabbc;
+        background-color: rgb(44, 171, 188);
+        background-image: none;
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+        font: normal 22px/38px "microsoft yahei";
+        font-family: "microsoft yahei";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 38px;
+        font-size-adjust: none;
+        font-stretch: normal;
+        -x-system-font: none;
+        font-feature-settings: normal;
+        font-language-override: normal;
+        font-kerning: auto;
+        font-synthesis: weight style;
+        font-variant-alternates: normal;
+        font-variant-caps: normal;
+        font-variant-east-asian: normal;
+        font-variant-ligatures: normal;
+        font-variant-numeric: normal;
+        font-variant-position: normal;
+        color: #fff;
+        text-align: center;
+    }
+    #form_content{
+        padding:5px;
+        padding-top: 10px;
+        border:1px solid #ccc;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<div class="tabbable">
+<div class="tab-content" style="padding:0 0;">
+<div style="margin:0;">
+    <h2 style="height: 45px; font: normal 30px/45px; font-family:microsoft yahei;">
+    <img src="./assets/img/hospital_title.png" style="width:5%;">预约挂号</h2>
+    <div>
+    <hr style="color: #2cabbc; margin:2px; size:5px;">
+    <!-- <img style="width:100%; height:200px;" src="./assets/img/hospital.jpg"> -->
+        <form class="form-horizontal" id="form_content"> 
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="name"><span class="text-danger">*</span>姓名</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="tel"><span class="text-danger">*</span>联系电话</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="tel"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="note"><span class="text-danger">*</span>备&nbsp;&nbsp;注</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="note" placeholder="请填写所挂科室" />
+                </div>
+                <div class="col-sm-4">
+                    <p class="help-block">
+                        如科室不详，可在此对病情简单描述
+                    </p>
+                </div>
+            </div>
+            <!--确认重置按钮  -->
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button type="button"  id="bootbox-confirm"  class="btn btn-success btn-sm ajax-form-submit" style="width:100px;"><i class="icon-ok"></i>确认</button>
+                    <button type="reset" class="btn btn-default btn-sm" style="width:100px; margin-left:16px;"><i class="icon-undo"></i>重置</button>                          
+                </div>
+            </div>                   
+        </form> 
+    </div>
+    <div style="margin:10px;">
+        <h5 style="line-height:150%;"><strong>医院简介：</strong>智慧社区医院成立于2003年，注册资金500万元，我院属南岸区社区医院，医院有多个社区门诊站，科室齐全，规模强大，现因扩大规模，需大量招聘各科医生及护士，欢迎医生护士的加入，欢迎各位居民前来就医。</h5>
+    </div>
+    <div class="bgf8" style="margin:10px;">
+        <div class="jobList-bos grid1000">
+            <h2 class="title">
+                <span>单位地址</span>
+            </h2>
+            <h5>地址：重庆市南岸区</h5>
+        </div>   
+    </div>
+</div>
+  <script src="http://api.map.baidu.com/api?v=2.0&ak=D6IvaCP4jjo114QGvTqKOGdnrPQi9Zc3"></script>
+  <div id="allmap"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+  // 百度地图API功能
+  var map = new BMap.Map("allmap");
+  var point = new BMap.Point(106, 29.915);
+  map.centerAndZoom(point, 12);
+  var marker = new BMap.Marker(point);  // 创建标注
+  map.addOverlay(marker);               // 将标注添加到地图中
+  marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+  setTimeout(function(){
+    map.setZoom(14);   
+  }, 2000);  //2秒后放大到14级
+  map.enableScrollWheelZoom(true);
+</script>
+</body>
+</html>

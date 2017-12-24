@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<link href="artDialog/css/ui-dialog.css" rel="stylesheet">	
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="artDialog/dist/dialog-min.js"></script>
+	<style>
+		body{
+			background-color: #D4CA8F;
+			/* font-family: "Times New Roman","楷体"; */
+		}
+		h2{
+			text-align: center;
+		}
+		#content{
+			background:#fff;
+			padding:20px;
+		}
+		#sure{
+			text-align: center;
+		}
+	</style>
+	<script>
+		$(function() {
+		  $('#btn').on('click',function(){
+		  	var q1 = $('input:radio[name="1"]:checked').val();
+		  	var q2 = $('input:radio[name="2"]:checked').val();
+		  	var q3 = $('input:radio[name="3"]:checked').val();
+		  	var q4 = $('input:radio[name="4"]:checked').val();
+		  	var q5 = $('input:radio[name="5"]:checked').val();
+		  	var q6 = $('input:radio[name="6"]:checked').val();
+		  	var q7 = $('input:radio[name="7"]:checked').val();
+		  	var q8 = $('input:radio[name="8"]:checked').val();
+		  	if(!q1 || !q2 || !q3 || !q4 || !q5 || !q6 || !q7 || !q8){
+		  		dialog({
+					title:"结果评估",
+					content:'<p style="font-size:15px;">请回答全部问题，才能生成睡眠质量等级报告！</p>',
+					okValue:"确定",
+					ok:function(){},
+				}).showModal();
+		  	}else{
+		  		var result = parseInt(q1) + parseInt(q2) + parseInt(q3) + parseInt(q4) + parseInt(q5) + parseInt(q6) + parseInt(q7) + parseInt(q8);
+		  		if(result >= 0 && result <= 3){
+		  			dialog({
+						title:"结果评估",
+						content:'<h3 style="text-align:center;">睡眠质量等级：一等</h3><p style="font-size:15px; padding-top:15px;">祝贺您，您目前的睡眠质量非常高，健康状况良好，应一直保持下去！</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+		  		}else if(result >= 4 && result <= 8){
+		  			dialog({
+						title:"结果评估",
+						content:'<h3 style="text-align:center;">睡眠质量等级：二等</h3><p style="font-size:15px; padding-top:15px;">您的睡眠质量平平，健康状况有所下降，如果再不引起足够的重视，您的状况会向第三等级发展~~~</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+		  		}else if(result >= 9 && result <= 16){
+		  			dialog({
+						title:"结果评估",
+						content:'<h3 style="text-align:center;">睡眠质量等级：三等</h3><p style="font-size:15px; padding-top:15px;">您应该警惕了，您的睡眠质量比较糟糕，健康状况明显受损，饮食起居失去规律，对于工作您开始感到吃力~~~</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+		  		}else{
+		  			dialog({
+						title:"结果评估",
+						content:'<h3 style="text-align:center;">睡眠质量等级：四等</h3><p style="font-size:15px; padding-top:15px;">您的睡眠质量已经到了让您非常头痛的底部，长期的睡眠不足，导致健康状况严重恶化，应付工作力不从心，情绪不稳定~~~</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+		  		};
+		  	};
+		  });  
+	    });
+	</script> 
+</head>
+<body>
+	<h2>睡眠质量测评表</h2>
+	<div class="container" id="content">
+		<div class="row">
+			<div class="col-md-6">
+				<div>
+					<p>1、您的睡眠状况是？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="1" id="" value="1">
+					    A. 睡眠时常觉醒或睡而不实,晨醒过早,但不影响工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="1" id="" value="2">
+					   B. 偶有失眠,但尚能坚持工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="1" id="" value="4">
+					    C. 睡眠不足4小时,影响正常工作 
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="1" id="" value="6">
+					    D. 经常不眠,难以坚持正常工作
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>2、您是否有健忘的症状？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="2" id="" value="1">
+					    A. 偶尔有记忆力减弱
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="2" id="" value="2">
+					   B. 记忆力减弱,但能坚持正常工作和生活
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="2" id="" value="3">
+					    C. 记忆力明显减弱,影响正常工作和生活 
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>3、您是否经常有神疲乏力的感觉？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="3" id="" value="1">
+					    A. 精神不振,可坚持正常工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="3" id="" value="2">
+					   B. 精神疲乏,勉强坚持正常工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="3" id="" value="3">
+					    C. 精神极度疲乏,不能坚持正常工作 
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>4、您是否经常感觉腰膝酸软？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="4" id="" value="1">
+					    A. 活动后腰膝酸软,可坚持正常工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="4" id="" value="2">
+					   B. 经常出现腰膝酸软,勉强坚持正常工作及生活
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="4" id="" value="3">
+					    C. 腰膝酸软,不能坚持正常工作和生活 
+					  </label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div>
+					<p>5、您是否经常头晕耳鸣？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="5" id="" value="1">
+					    A. 偶尔有
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="5" id="" value="2">
+					   B. 经常,但能坚持正常工作和生活
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="5" id="" value="3">
+					    C. 头晕耳鸣,影响正常工作和学习 
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>6、您是否经常出现少气懒言的状况？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="6" id="" value="1">
+					    A. 不喜欢多说话,不问则不答
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="6" id="" value="2">
+					   B. 懒于言语,多问少答
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="6" id="" value="3">
+					    C. 不想说话,表情冷漠 
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>7、您是否有心悸的现象？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="7" id="" value="1">
+					    A. 偶尔有
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="7" id="" value="2">
+					   B. 经常出现,但能坚持正常工作
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="7" id="" value="3">
+					    C. 心悸明显,影响正常工作 
+					  </label>
+					</div>
+				</div>
+				<div>
+					<p>8、您是否经常感觉心烦？</p>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="8" id="" value="1">
+					    A. 有时心烦,自我劝慰后安静下来
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="8" id="" value="2">
+					   B. 经常心烦,难以自我劝慰,但休息后可以平静
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="8" id="" value="3">
+					    C. 心烦意乱,影响工作和休息 
+					  </label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p id="sure">
+  			<button type="button" class="btn btn-success btn-large" id="btn">提交</button>
+  		</p>
+	</div>
+</body>
+</html>

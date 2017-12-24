@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link href="artDialog/css/ui-dialog.css" rel="stylesheet">
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/Particleground.js"></script>
+	<script src="artDialog/dist/dialog-min.js"></script>
+	<style>
+		body,html{background: #16a085;height: 100%;overflow: hidden;}
+		@font-face {
+		    font-family: 'adminthemesregular';
+		    src: url('font/adminthemes-webfont.eot');
+		    src: url('font/adminthemes-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('font/adminthemes-webfont.woff2') format('woff2'),
+		         url('font/adminthemes-webfont.woff') format('woff'),
+		         url('font/adminthemes-webfont.ttf') format('truetype'),
+		         url('font/adminthemes-webfont.svg#adminthemesregular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		.login-box{
+			width:300px;
+			height:auto;
+			margin:10% auto;
+			padding:40px;
+			box-shadow:0 -15px 30px #0d957a;
+			border-radius:5px;
+		}
+		.login-box p.title{
+			font-size:23px;
+			font-weight: bold;
+			text-align: center;
+			color:#45bda6;
+			text-shadow:0 0 1px #0e947a;
+			margin-bottom:30px;
+		}
+		.login-box p{position: relative;}
+		.login-box p::before{
+			font-family: 'adminthemesregular';
+			position:absolute;
+			top:0;
+			left:10px;
+			height:42px;
+			line-height: 42px;
+			font-size:20px;
+			color:#0c9076;
+		}
+		.login-box p.usericon::before{
+			content:"u";
+		}
+		.login-box p.passicon::before{
+			content:"p";
+		}
+		canvas{position: absolute;}
+		.login-box input{
+			font-size: 16px;
+			height:26px;
+			width:90%;
+			border:none;
+			padding:8px 5%;
+			background:#5cbdaa;
+			color:white;
+			text-indent:2em;
+		}
+		.login-box input::-webkit-input-placeholder{
+			color:#f4f4f4;
+			line-height:inherit;
+		}
+		.login-box input::-moz-placeholder{
+			color:#f4f4f4;
+			line-height:inherit;
+		}
+		.login-box input.submit-btn{
+			width:100%;
+			height: 42px;
+			font-size: 16px;
+			background:#048f74;
+			color:#f8f8f8;
+			text-indent:0;
+		}
+		.login-box input.submit-btn:hover{
+			background:#0c9076;
+			color:#f4f4f4;
+		}
+	</style>
+	<script>
+		$(function(){
+			$('body').particleground({
+				dotColor: '#5cbdaa',
+    			lineColor: '#5cbdaa'
+			});
+			$('.submit-btn').on('click',function(){
+				var name = $('#username').val();
+				var password = $('#password').val();
+				if(name == 'personal' && password == '123'){
+					location.href = "index.html";
+				}else if(name == '' || password == ''){
+					dialog({
+						title:"登录验证",
+						content:'<p style="font-size:15px;">用户名或密码不能为空，请重新输入！</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+				}else{
+					dialog({
+						title:"登录验证",
+						content:'<p style="font-size:15px;">您输入的用户名或密码错误，不能以管理员的身份登录！</p>',
+						okValue:"确定",
+						ok:function(){},
+					}).showModal();
+				};	
+			});
+		});
+	</script> 
+</head>
+<body>
+	<div class="login-box">
+		<p class="title">智慧睡眠监护平台</p>
+		<p class="usericon">
+			<input type="text" placeholder="用户" id="username">
+		</p>
+		<p class="passicon">
+			<input type="password" placeholder="密码" id="password">
+		</p>
+		<p>
+			<input type="button" value="立即登录" class="submit-btn">
+		</p>
+	</div>
+</body>
+</html>

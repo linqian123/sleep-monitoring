@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+    <link rel="stylesheet" href="ace/css/ace.min.css" />
+    <link rel="stylesheet" href="ace/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="ace/css/ace-rtl.min.css" />
+    <link href="artDialog/css/ui-dialog.css" rel="stylesheet">
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="ace/js/bootstrap.min.js"></script>
+    <script src="ace/js/ace.min.js"></script>
+    <script src="ace/js/ace-elements.min.js"></script>
+    <script src="ace/js/ace-extra.min.js"></script>
+    <script src="artDialog/dist/dialog-min.js"></script>
+    <style type="text/css">
+        #contents{
+            margin-top:50px;
+        }
+        img{
+            text-align: center;
+            width:60px;
+            height:60px;
+        }
+        .edit{
+            text-align: center;
+        }
+        #name,#age,#height,#weight,#waist,#hipline,#l_eye,#r_eye
+        ,#chronic,#disabled,#deformity{
+          width:100px;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#edit').on('click',function(){
+                dialog({
+                    title:"健康数据编辑",
+                    content:$('#health_record'),
+                    okValue:"确定",
+                    ok:function(){},
+                    cancelValue:"取消",
+                    cancel:function(){}
+                }).showModal();
+            });
+        });
+    </script>
+</head>
+<body>
+  <div class="container">
+       <div class="panel panel-default" id="contents">
+            <div class="panel-heading">
+                <h4>基本健康信息档案</h4>
+            </div>
+            <table class="table table-bordered">
+               <thead></thead>
+               <tbody>
+                    <tr>
+                        <td rowspan="8">
+                            <img src="imgs/7.png" alt="">
+                        </td>
+                    </tr>
+                   <tr>
+                       <td>姓名：</td>
+                       <td>柳辰飞</td>
+                       <td>性别：</td>
+                       <td>男</td>
+                       <td>民族：</td>
+                       <td>汉族</td>
+                   </tr>
+                   <tr>
+                      <td>年龄：</td>
+                      <td>65岁</td>
+                      <td>出生年月：</td>
+                      <td colspan="3">1952年1月6号</td>
+                   </tr>
+                   <tr>
+                       <td>身份证号：</td>
+                       <td colspan="5">331021199301060040</td>
+                   </tr>
+                   <tr>
+                       <td>家庭住址：</td>
+                       <td colspan="5">重庆市南岸区南山街道崇文路2号</td>
+                   </tr>
+                   <tr>
+                       <td>身高：</td>
+                       <td>175</td>
+                       <td>体重：</td>
+                       <td>60kg</td>
+                       <td>腰围：</td>
+                       <td>85</td>
+                   </tr>
+                   <tr>
+                       <td>臀围：</td>
+                       <td>90</td>
+                       <td>左眼视力：</td>
+                       <td>5.0</td>
+                       <td>右眼视力：</td>
+                       <td>5.1</td>
+                   </tr>
+                   <tr>
+                       <td>慢性病：</td>
+                       <td>高血压</td>
+                       <td>失能情况：</td>
+                       <td>无</td>
+                       <td>残疾情况：</td>
+                       <td>无</td>
+                   </tr>
+               </tbody>
+           </table>
+       </div>
+       <div class="edit">
+           <button type="button" class="btn btn-success" id="edit">编辑</button>
+       </div>
+  </div>
+  <div id="health_record" style="display:none;">
+      <form class="form-inline">
+          <p>
+            <label for="name">姓名：</label>
+            <input type="text" class="form-control" id="name" placeholder="柳辰飞">
+            <label for="age">年龄：</label>
+            <input type="text" class="form-control" id="age" placeholder="65">
+          </p>
+          <p>
+            <p>身份证号：</p>
+            <input type="text" class="form-control" placeholder="331021199301060040">
+          </p>
+          <p>
+            <p>家庭住址：</p>
+            <input type="text" class="form-control" placeholder="重庆市南岸区崇文路2号">
+          </p>
+          <p>
+            <label for="height">身&nbsp;&nbsp;&nbsp;高：</label>
+            <input type="text" class="form-control" id="height" placeholder="175">
+            <label for="weight">&nbsp;&nbsp;&nbsp;体&nbsp;&nbsp;重：&nbsp;&nbsp;</label>
+            <input type="text" class="form-control" id="weight" placeholder="60">
+            <label for="waist">&nbsp;&nbsp;&nbsp;腰&nbsp;&nbsp;围：&nbsp;&nbsp;</label>
+            <input type="text" class="form-control" id="waist" placeholder="85">
+          </p>
+          <p>
+            <label for="hipline">臀&nbsp;&nbsp;&nbsp;围：</label>
+            <input type="text" class="form-control" id="hipline" placeholder="90">
+            <label for="l_eye">左眼视力：</label>
+            <input type="text" class="form-control" id="l_eye" placeholder="5.0">
+            <label for="r_eye">右眼视力：</label>
+            <input type="text" class="form-control" id="r_eye" placeholder="5.1">
+          </p>
+          <p>
+            <label for="chronic">慢性病：</label>
+            <input type="text" class="form-control" id="chronic" placeholder="高血压">
+            <label for="disabled">失能情况：</label>
+            <input type="text" class="form-control" id="disabled" placeholder="无">
+            <label for="deformity">残疾情况：</label>
+            <input type="text" class="form-control" id="deformity" placeholder="无">
+          </p>
+      </form>
+  </div>
+</body>
+</html>

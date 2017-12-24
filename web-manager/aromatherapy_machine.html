@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<link href="jquery-ui-1.10.4.custom/css/base/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<style>
+		body,html,ul,li{
+			margin:0;
+			padding:0;
+			height:100%;
+			width:100%;
+		}
+		#bg{
+			width:100%;
+			height:40%;
+		}
+		ul{list-style: none;}
+		#product p{
+			font-size: 15px;
+		}
+		#mode i{
+			margin-top: 5px;
+			font-size: 20px;
+			margin-bottom: 5px;
+		}
+		#mode div{
+			padding-right: 25px;
+			padding-left: 25px;
+			font-size: 15px;
+		}
+		#time{
+			padding-top: 15px;
+			padding-bottom: 10px;
+		}
+		/*#control{
+			margin-top: 50px;
+			width:100px;
+			height: 100px;
+			border-radius: 50%;
+			background:#D15B47;
+			box-shadow: 10px 10px 5px #888888;
+			color:#fff;
+			text-align: center;
+			line-height: 100px;
+			font-size: 16px;
+			cursor:pointer;
+		}*/
+		#modeselect{
+			font-size: 16px;
+			padding-left: 15px;
+			color:#f6931f;
+			font-weight: bold; 
+		}
+		#color .se{
+			margin-top:10px;
+			width:50px;
+			height:50px;
+			border-radius: 50%;
+			box-shadow: 5px 5px 5px #888888;
+		}
+		#set{
+			position: relative;
+		}
+		#sure{
+			padding-top: 20px;
+			position: absolute;
+			right:30px;
+		}
+		#col1{
+			background: #EC2A32;
+		}
+		#col2{
+			background: #FFB752;
+		}
+		#col3{
+			background: #F0F0F0;
+		}
+		#col4{
+			background: #87B87F;
+		}
+		#col5{
+			background: #6FB3E0;
+		}
+		#col6{
+			background: #C991FE;
+		}
+		#colorselect{
+			margin-left:20px;
+			display: inline-block;
+			width:40px;
+			height: 20px;
+			background-color: #C991FE;
+			border-radius: 5px;
+		}
+		#slider{
+			background-color:#FFB752;
+		}
+	</style>
+	<script>
+		$(function() {
+		    $( "#slider" ).slider({
+		      range: "max",
+		      value: 20,
+		      min: 0,
+		      max: 60,
+		      slide: function( event, ui ) {
+		        $( "#amount" ).val(  ui.value + "分钟");
+		      }
+		    });
+		    $( "#amount" ).val(  $( "#slider" ).slider( "value" ) + "分钟");
+	     	$('#control').on('click',function(){
+		    	if($('#control').html() == '开启'){
+		    		$('#control').attr('class','btn btn-danger').html('关闭');
+		    	}else{
+		    		$('#control').attr('class','btn btn-success').html('开启');
+		    	};
+		    }); 
+		    $('#lighton').on('click',function(){
+		    	$('#modeselect').html('全亮灯');
+		    });
+		    $('#shower').on('click',function(){
+		    	$('#modeselect').html('全雾化');
+		    });
+		    $('#col1').on('click',function(){
+		    	$('#colorselect').css('background-color','#EC2A32');
+		    });
+		    $('#col2').on('click',function(){
+		    	$('#colorselect').css('background-color','#FFB752');
+		    });
+		    $('#col3').on('click',function(){
+		    	$('#colorselect').css('background-color','#F0F0F0');
+		    });
+		    $('#col4').on('click',function(){
+		    	$('#colorselect').css('background-color','#87B87F');
+		    });
+		    $('#col5').on('click',function(){
+		    	$('#colorselect').css('background-color','#6FB3E0');
+		    });
+		    $('#col6').on('click',function(){
+		    	$('#colorselect').css('background-color','#C991FE');
+		    });
+	  	});
+	</script> 
+</head>
+<body>
+	<img src="imgs/aromatherapy_machine.jpg" alt="" id="bg">
+	<div class="container">
+		<div class="row">
+		  	<div class="col-md-7" id="set">
+		  		<h3>模式选择：<span id="modeselect">全亮灯<span></h3>
+		  		<div class="btn-group" role="group" id="mode">
+				    <button type="button" class="btn btn-warning" id="lighton">
+				    	<i class="fa fa-lightbulb-o"></i>
+				    	<div>全亮灯</div>
+				    </button>
+				    <button type="button" class="btn btn-info" id="shower">
+				    	<i class="fa fa-spinner"></i>
+				    	<div>全雾化</div>
+				    </button>
+				</div>
+		  		<h3>颜色选择：<span id="colorselect"></span></h3>
+		  		<div class="row" id="color">
+		  			<div class="col-md-2">
+		  				<div class="se" id="col1"></div>
+		  			</div>
+		  			<div class="col-md-2">
+		  				<div class="se" id="col2"></div>
+		  			</div>
+		  			<div class="col-md-2">
+		  				<div class="se" id="col3"></div>
+		  			</div>
+		  			<div class="col-md-2">
+		  				<div class="se" id="col4"></div>
+		  			</div>
+		  			<div class="col-md-2">
+		  				<div class="se" id="col5"></div>
+		  			</div>
+		  			<div class="col-md-2">
+		  				<div class="se" id="col6"></div>
+		  			</div>
+		  		</div>
+		  		<h3>
+		  		  定时设置：
+				  <label for="amount"></label>
+				  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold; font-size: 16px;">
+				</h3>
+		  		<div class="row" id="time">
+		  			<div class="col-md-1"></div>
+		  			<div class="col-md-8" id="slider"></div>
+		  			<div class="col-md-3"></div>
+		  		</div>
+		  		<div id="sure">
+		  			<button type="button" class="btn btn-success" id="control">开启</button>
+		  		</div>
+		  	</div>
+		  	<!-- <div class="col-md-2">
+		  		<h3>开关：</h3>
+		  		<div id="control">开启</div>
+		  	</div> -->
+		  	<div class="col-md-5" id="product">
+		  		<h3>香薰机</h3>
+		  		<p>1、超声雾化，清新自然</p>
+		  		<p>花草芬芳，亲近自然，身与心都在路上。</p>
+		  		<p>2、保湿空气，持久温润</p>
+		  		<p>细致持久的加湿效果，让你的肌肤可以呼吸。</p>
+		  		<p>3、多彩灯光，氛围营造</p>
+		  		<p>红橙黄绿青蓝紫，七种色彩，随意变换</p>
+		  		<p>4、相伴入眠，甜美好梦</p>
+		  		<p>一缕清香，洗尽一天疲惫，柔美灯光，倍感温馨。</p>
+		  		<p>5、智能生活，远程控制</p>
+		  		<p>和其他设备联动，智能启动，远程控制，随心所欲。</p>
+		  	</div>
+		</div>
+	</div>
+</body>
+</html>

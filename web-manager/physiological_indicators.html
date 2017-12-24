@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>个人用户页面</title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="js/Chart.js"></script>
+	<style>
+		body,html,ul,li{
+			margin:0;
+			padding:0;
+		}
+		ul{list-style: none;}
+		.mainaccount{
+			padding:20px;
+			padding-top: 40px;
+		}
+		.mainaccount img{
+			text-align: center;
+			width:90px;
+			height:90px;
+			border: 1px solid #666;
+			border-radius: 50%;
+		}
+		.mainaccount p{
+			padding-top: 15px;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.subaccount{
+			padding:10px;
+			padding-left: 0px;
+		}
+		.subaccount img{
+			width:60px;
+			height:60px;
+			border-radius: 50%;
+			border:1px solid #666;
+		}
+		.subaccount p{
+			padding-top: 10px;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		.detail{
+			padding:20px;
+			padding-top: 15px;
+			padding-bottom: 0px;
+		}
+		.detail p{
+			font-size: 15px;
+		}
+		.detail p span.em{
+			font-weight: bold;
+		}
+		.week-data{
+			padding-left:20px;
+		}
+		.week-data h3{
+			padding-bottom:10px;
+		}
+		li.real{
+			margin-bottom: 15px;
+			position: relative;
+		}
+		.real img{
+			width:70px;
+			height:70px;
+			border:1px solid #666;
+		}
+		.real div.text{
+			position:absolute;
+			left:85px;
+			top:6px;
+		}
+		.real .head{
+			font-size: 15px;
+			font-weight: bold;
+			padding-bottom: 3px;
+		}
+	</style>
+	<script>
+		$(function(){
+			function currentTime(){ 
+			    var d=new Date(),str=''; 
+			    str+=d.getFullYear()+'年'; 
+			    str+=d.getMonth() + 1+'月'; 
+			    str+=d.getDate()+'日'; 
+			    str+=d.getHours()+'时'; 
+			    str+=d.getMinutes()+'分'; 
+			    return str; 
+			}; 
+			setInterval(function(){
+				$('#time').html(currentTime);
+			},1000);
+			function getdata(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-physical-data.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						$('#blood_pressure_h').html(data.blood_pressure_h);
+						$('#blood_pressure_l').html(data.blood_pressure_l);
+						$('#single_heart_rate').html(data.single_heart_rate);
+						$('#single_ventricular_beat').html(data.single_ventricular_beat);
+						$('#multi_heart_rate').html(data.multi_heart_rate);
+						$('#multi_ventricular_beat').html(data.multi_ventricular_beat);
+						$('#blood_oxygen').html(data.blood_oxygen);
+						$('#blood_sugar').html(data.blood_sugar);
+						$('#temperature').html(data.temperature);
+						$('#uric_acid').html(data.uric_acid);
+						$('#weight').html(data.weight);
+						$('#vital_capacity').html(data.vital_capacity);
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			setInterval(function(){
+				getdata();
+			},1000);
+		});
+	</script> 
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+		  	<div class="col-md-3">
+			  	<div class="mainaccount">
+					<img src="imgs/7.png" alt="">
+					<p>柳辰飞(主账号)</p>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<ul>
+							<li class="subaccount">
+								<img src="imgs/8.png" alt="">
+								<p>赵霞(妻子)</p>
+							</li>
+							<li class="subaccount">
+								<img src="imgs/10.png" alt="">
+								<p>柳叶(女儿)</p>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<ul>
+							<li class="subaccount">
+								<img src="imgs/9.png" alt="">
+								<p>柳涛(爸爸)</p>
+							</li>
+							<li class="subaccount">
+								<img src="imgs/11.png" alt="">
+								<p>柳向阳(儿子)</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+		  	</div>
+		  	<div class="col-md-9">
+		  		<div class="detail">
+		  			<h3>柳辰飞（主账号）</h3>
+		  			<p><span class="em">健康状况：</span>良好</p>
+		  			<p><span class="em">最近测量：</span><span id="time"></span></p>
+		  			<p><span class="em">健康提示：</span>身体状况良好，精力充沛，充满活力，能够适应紧张又强度大的工作，注意劳逸结合，时刻保持。</p>
+		  		</div>
+		  		<div class="week-data">
+		  			<h3>生理指标监测：</h3>
+		  			<div class="row">
+		  				<div class="col-md-4">
+		  					<ul>
+		  						<li class="real">
+			  						<img src="imgs/21.png" alt="">
+									<div class="text">
+										<div class="head">血压(mmHg)</div>
+										<div>收缩压：<span id="blood_pressure_h">115</span></div>
+										<div>舒张压：<span  id="blood_pressure_l">73</span></div>
+									</div>
+								</li>
+								<li class="real">
+		  							<img src="imgs/13.png" alt="">
+									<div class="text">
+										<div class="head">单导心电(bpm)</div>
+										<div>平均心率：<span id="single_heart_rate">76</span></div>
+										<div>室性心搏：<span id="single_ventricular_beat">0</span></div>
+									</span>
+		  						</li>
+		  						<li class="real">
+		  							<img src="imgs/22.png" alt="">
+									<div class="text">
+										<div class="head">12导心电(bpm)</div>
+										<div>平均心率：<span id="multi_heart_rate">72</span></div>
+										<div>室性心搏：<span  id="multi_ventricular_beat">0</span></div>
+									</div>
+		  						</li>
+		  					</ul>
+		  				</div>
+		  				<div class="col-md-4">
+		  					<ul>
+		  						<li class="real">
+		  							<img src="imgs/19.png" alt="">
+									<div class="text">
+										<div class="head">血氧(%)</div>
+										<div>血氧饱和度：<span id="blood_oxygen">94</span></div>
+									</div>
+		  						</li>
+		  						<li class="real">
+		  							<img src="imgs/15.png" alt="">
+									<div class="text">
+										<div class="head">体温(℃)</div>
+										<div>温度：<span id="temperature">36.40</span></div>
+									</div>
+		  						</li>
+		  						<li class="real">
+		  							<img src="imgs/17.png" alt="">
+									<div class="text">
+										<div class="head">体重(kg)</div>
+										<div>体重：<span id="weight">63.50</span></div>
+									</div>
+		  						</li>
+		  					</ul>
+		  				</div>
+		  				<div class="col-md-4">
+		  					<ul>
+		  						<li class="real">
+		  							<img src="imgs/18.png" alt="">
+									<div class="text">
+										<div class="head">血糖(mmol/L)</div>
+										<div>血糖值：<span id="blood_sugar">4.60</span></div>
+									</div>
+		  						</li>
+		  						<li class="real">
+		  							<img src="imgs/20.png" alt="">
+									<div class="text">
+										<div class="head">尿酸(mmol/L)</div>
+										<div>尿酸量：<span id="uric_acid">5.51</span></div>
+									</div>
+		  						</li>
+		  						<li class="real">
+		  							<img src="imgs/12.png" alt="">
+									<div class="text">
+										<div class="head">肺活量(ml)</div>
+										<div>肺活量：<span id="vital_capacity">2060.00</span></div>
+									</div>
+		  						</li>
+		  					</ul>
+		  				</div>
+		  			</div>
+		  		</div>
+		  	</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title></title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<link rel="stylesheet" href="ace/css/ace-skins.min.css" />
+	<link rel="stylesheet" href="ace/css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="dataTables/dataTables.bootstrap.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="ace/js/ace.min.js"></script>
+	<script src="ace/js/ace-elements.min.js"></script>
+	<script src="ace/js/ace-extra.min.js"></script>
+	<script src="dataTables/jquery.dataTables.min.js"></script>
+	<script src="dataTables/dataTables.bootstrap.min.js"></script>
+	<style>
+		body,html{
+			margin:0;
+			padding:0;
+		}
+		#title{
+			color:#fff;
+			font-size: 25px;
+			padding-top:6%;
+			padding-left:85px;
+		}
+	</style>
+	<script>
+		$(function(){
+			function currentTime(){ 
+			    var d=new Date(),str=''; 
+			    str+=d.getFullYear()+'年'; 
+			    str+=d.getMonth() + 1+'月'; 
+			    str+=d.getDate()+'日'; 
+			    str+=d.getHours()+'时'; 
+			    str+=d.getMinutes()+'分'; 
+			    str+= d.getSeconds()+'秒'; 
+			    return str; 
+			}; 
+			setInterval(function(){
+				$('#time').html(currentTime);
+			},1000); 
+			$("#sidebar").height($(window).height()-$('#navbar').height());
+			$("#iframe").height($(window).height()-140);
+			$(".iframeurl").on('click',function(){
+				var cid = $(this).attr('name');
+				$("#iframe").attr('src',cid);
+				$('li').removeClass('active');
+				$(this).parent().addClass('active');
+				var bid =$(this).attr('title');
+				if(bid!="系统首页"){
+					bread(bid);
+				}else{
+					$("#breadcrumbs").siblings('li').remove();
+				}
+			});
+			function bread(bname){
+				$("#breadcrumbs").siblings('li').remove();
+				var bli = document.createElement('li');
+				bli.innerHTML=bname;
+				$('#breadcrumbs').parent().append(bli);
+			};
+		});
+	</script> 
+</head>
+<body>
+	<div class="navbar navbar-default" id="navbar">
+		<div class="navbar-container">
+			<div class="navbar-header pull-left">
+				<div id="title">智慧睡眠监护平台</div>
+			</div>
+			<div class="navbar-header pull-right" role="navigation">
+				<ul class="nav ace-nav">
+					<li class="light-blue">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">
+					 		<span class="user-info"><small>欢迎光临,</small>个人用户</span>
+							<i class="icon-caret-down"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-caret pull-right dropdown-yellow dropdown-close">
+							<li>
+								<a href="">
+									<i class="icon-user"></i>
+									<span class="menu-text">个人资料</span>
+								</a>
+							</li>
+							<li>
+								<a href="">
+									<i class="icon-pencil"></i>
+									<span class="menu-text">修改密码</span>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="login.html">
+									<i class="icon-off"></i>
+									<span class="menu-text">安全退出</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="light-blue">
+						<a>
+							<span id="time"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="main-container">
+		<div class="main-container-inner">
+			<div class="sidebar" id="sidebar">
+				<div class="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large">
+						<a class="btn btn-success btn-large">
+							<i class="icon-signal"></i>
+						</a>
+						<a class="btn btn-info">
+							<i class="icon-pencil"></i>
+						</a>
+						<a class="btn btn-warning">
+							<i class="icon-group"></i>
+						</a>
+						<a class="btn btn-danger">
+							<i class="icon-cogs"></i>
+						</a>
+					</div>
+				</div>
+				<ul class="nav nav-list">
+					<li>
+						<a href="javascript:void(0)">
+							<span class="menu-text"></span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							<i class="icon-bar-chart"></i>
+							<span class="menu-text">睡眠监测</span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<li class="active">
+								<a href="javascript:void(0)" name="sleep_personal.html" class="iframeurl" title="实时监控">
+								<i class="icon-double-angle-right"></i>实时监控
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="sleep_test.html" class="iframeurl" title="睡眠自测试">
+								<i class="icon-double-angle-right"></i>睡眠自测试
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							<i class="icon-pencil"></i>
+							<span class="menu-text">我的设备</span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<li>
+								<a href="javascript:void(0)" name="sleep_lamp.html" class="iframeurl" title="舒眠灯">
+								<i class="icon-double-angle-right"></i>舒眠灯
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="aromatherapy_machine.html" class="iframeurl" title="香薰机">
+								<i class="icon-double-angle-right"></i>香熏机
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="map.html" class="iframeurl" title="定位手环">
+								<i class="icon-double-angle-right"></i>定位手环
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							<i class="icon-briefcase"></i>
+							<span class="menu-text">助眠工具</span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<li>
+								<a href="javascript:void(0)" name="http://www.kukuklok.com/" class="iframeurl" title="智慧闹钟">
+								<i class="icon-double-angle-right"></i>智慧闹钟
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="angel_music.html" class="iframeurl" title="助眠音乐">
+								<i class="icon-double-angle-right"></i>助眠音乐
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							<i class="icon-user"></i>
+							<span class="menu-text">个人中心</span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<li>
+								<a href="javascript:void(0)" name="health_file.html" class="iframeurl" title="健康档案">
+								<i class="icon-double-angle-right"></i>健康档案
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="physiological_indicators.html" class="iframeurl" title="生理指标">
+								<i class="icon-double-angle-right"></i>生理指标
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="set_preference.html" class="iframeurl" title="设置中心">
+								<i class="icon-double-angle-right"></i>设置中心
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							<i class="icon-leaf"></i>
+							<span class="menu-text">医养结合</span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<li>
+								<a href="javascript:void(0)" name="hospital_registration.html" class="iframeurl" title="预约挂号">
+								<i class="icon-double-angle-right"></i>预约挂号
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="doctor_chat.html" class="iframeurl" title="远程诊疗">
+								<i class="icon-double-angle-right"></i>远程诊疗
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" name="healthy_knowledge.html" class="iframeurl" title="养生常识">
+								<i class="icon-double-angle-right"></i>养生常识
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<div class="sidebar-collapse">
+					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+				</div>
+			</div>
+			<div class="main-content" id="main-content">
+				<div class="breadcrumbs">
+					<ul class="breadcrumb">
+						<li id="breadcrumbs">
+							<i class="icon-home"></i>
+							<a href="javascript:void(0)">首页</a>
+						</li>
+					</ul>
+				</div>
+				<iframe id="iframe" style="border:0; width:100%; background-color:#FFF;" name="iframe" frameborder="0" src="sleep_personal.html">  </iframe>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

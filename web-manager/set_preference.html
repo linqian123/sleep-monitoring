@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<link href="artDialog/css/ui-dialog.css" rel="stylesheet">
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="artDialog/dist/dialog-min.js"></script>
+	<style>
+		.row h3{
+			padding-top: 30px;
+		}
+		#personalinfo{
+			padding-top: 10px;
+		}
+		#heartmin,#heartmax,#breathmin,#breathmax,#turnovermin,#turnovermax{
+			width:150px;
+		}
+	</style>
+	<script>
+		$(function(){
+			$('#preference').on('click',function(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/set-preference.php',
+					data:{id:'qianqian',bmin:$('#breathmin').val(),bmax:$('#breathmax').val(),hmin:$('#heartmin').val(),hmax:$('#heartmax').val(),tmin:$('#turnovermin').val(),tmax:$('#turnovermax').val()},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data == '1'){
+							dialog({
+								title:"提交结果",
+								content:"<h4>报警阈值数据提交成功！</h4>",
+								okValue:"确定",
+								ok:function(){},
+							}).showModal();
+						}else{
+							dialog({
+								title:"提交结果",
+								content:"<h4>报警阈值数据提交失败！</h4>",
+								okValue:"确定",
+								ok:function(){},
+							}).showModal();
+						}
+					},
+					error:function(){
+						alert("Failed");
+					}		
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<h3>紧急联系人信息设置：</h3>
+				<form id="personalinfo" class="form-inline">
+				  <p>
+				    <p>紧急联系人姓名：</p>
+				    <input type="text" class="form-control" id="name" placeholder="赵霞">
+				  </p>
+				  <p>
+				    <p>紧急联系人电话：</p>
+				    <input type="text" class="form-control" id="telphone" placeholder="17784766445">
+				  </p>
+				  <p>
+				    <p>紧急联系人邮箱：</p>
+				    <input type="email" class="form-control" id="email" placeholder="1195918050@qq.com">
+				  </p>
+				  <p>
+				  	<button type="button" class="btn btn-success">确定</button>
+				  </p>
+				</form>
+			</div>
+			<div class="col-md-6">
+			  	<h3>报警阈值的设定：</h3>
+				<form id="personalinfo" class="form-inline">
+				  <p>
+				    <p>心率：min~max（次/每分钟）</p>
+				    <input type="text" class="form-control" id="heartmin" placeholder="60">
+				    <label>&nbsp;&nbsp;——</label>
+				    <input type="text" class="form-control" id="heartmax" placeholder="100">
+				  </p>
+				  <p>
+				    <p>呼吸：min~max（次/每分钟）</p>
+				    <input type="text" class="form-control" id="breathmin" placeholder="16">
+				    <label>&nbsp;&nbsp;——</label>
+				    <input type="text" class="form-control" id="breathmax" placeholder="20">
+				  </p>
+				  <p>
+				    <p>翻身次数：min~max（次/每分钟）</p>
+				    <input type="text" class="form-control" id="turnovermin" placeholder="0">
+				    <label>&nbsp;&nbsp;——</label>
+				    <input type="text" class="form-control" id="turnovermax" placeholder="26">
+				  </p>
+	  			  <p>
+		  			<button type="button" class="btn btn-success" id="preference">确定</button>
+		  		  </p>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

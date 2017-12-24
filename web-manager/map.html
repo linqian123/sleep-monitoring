@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>百度地图API的调用</title>
+	<link href="artDialog/css/ui-dialog.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="artDialog/dist/dialog-min.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=D6IvaCP4jjo114QGvTqKOGdnrPQi9Zc3"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+	<style type="text/css">   
+		html,body{height:100%;margin:0px;padding:0px;font-family:"微软雅黑";overflow:hidden;}
+		header{
+			height:13%;
+			background-color:#212121;
+			line-height: 80px;
+			padding-left: 40px;
+			color:#fff;
+			font-size: 20px;
+		}
+		header a{
+			float:right;
+			padding-right: 25px; 
+			font-size:18px;
+			color: #fff;
+			text-decoration: none;
+		}
+		header a:hover{
+			color:#fff;
+		}
+		aside{
+			float:left;
+			height:90%;
+			width:13%;
+			background-color:#3d3d3d;
+			color:#fff;
+			overflow:hidden;
+		}
+		aside ul{
+			list-style: none;
+			margin:0;
+			padding:0;
+		}
+		aside ul li{
+			font-size: 16px;
+			line-height: 4;
+			cursor: pointer;
+			text-align: center;
+			border-bottom:1px solid #5c5c5c;
+		}
+		aside ul li ul li{
+			font-size: 15px;
+			line-height: 3;
+		}
+		aside>ul li:last-child>ul li:last-child{
+			border-bottom:1px solid #5c5c5c;
+		}
+		aside ul li span{
+			display: block;
+		}
+		aside ul li span:hover{
+			background-color: #303030;
+		}
+		aside ul li ul li:hover{
+			background-color: #303030;
+		}  
+		#container{
+			float:left;
+			height:90%;
+			width:85%; 
+		} 
+		#info{
+			width:100px;
+			height:100px;
+			position: absolute;
+			right:0px;
+			top:13%;
+			border-radius:0 0 0 50%;
+			z-index:9999;
+			color:white;
+			text-align: center;
+			line-height: 100px;
+			font-size:18px;
+			font-weight:bold;
+		}
+	</style>   
+	<script>
+		$(function(){
+			var map = new BMap.Map("container");      
+			//var point = new BMap.Point(106.614059,29.541384);  //重邮
+			var point = new BMap.Point(116.331398,39.897445); //北京  
+			map.centerAndZoom(point, 18);        
+				map.enableScrollWheelZoom(true);
+			var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});
+			var top_left_navigation = new BMap.NavigationControl();
+			map.addControl(top_left_control);        
+			map.addControl(top_left_navigation);     
+			var overlays = [];
+			var geolocationControl = new BMap.GeolocationControl();
+			geolocationControl.addEventListener("locationSuccess", function(e){
+			    var address = '';
+			    address += e.addressComponent.province;
+			    address += e.addressComponent.city;
+			    address += e.addressComponent.district;
+			    address += e.addressComponent.street;
+			    alert("当前定位地址为：" + address);
+				});
+				geolocationControl.addEventListener("locationError",function(e){
+			    alert(e.message);
+				});
+				map.addControl(geolocationControl);
+				var styleOptions = {
+			    strokeColor:"red",   
+			    fillColor:"red",      
+			    strokeWeight: 3,       
+			    strokeOpacity: 0.8,	 
+			    fillOpacity: 0.6,      
+			    strokeStyle: 'solid'
+			};
+			var drawingManager = new BMapLib.DrawingManager(map, {
+			    isOpen: false, 
+			    enableDrawingTool: false, 
+			    drawingToolOptions: {
+			        anchor: BMAP_ANCHOR_TOP_RIGHT,
+			        offset: new BMap.Size(5, 5),
+			        scale:0.9,
+			        drawingModes:[
+			        	BMAP_DRAWING_MARKER,
+			        	BMAP_DRAWING_CIRCLE
+			        ] 
+			    },
+			    circleOptions: styleOptions, 
+			    polylineOptions: styleOptions, 
+			    polygonOptions: styleOptions, 
+			    rectangleOptions: styleOptions 
+			});
+			function alarminfo(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-electronic-fence.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data == '0'){
+							$('#info').css('background','rgba(0,199,140,0.7)').html('未设置围栏');
+						}else{
+							var elng = data.center_lng;
+					    	var elat = data.center_lat;
+					  		var ePoint = new BMap.Point(elng,elat);
+					  		var setRadius = data.radius;
+					  		var lng = "";
+							var lat = "";
+							$.ajax({
+								url:'http://localhost/sleep-monitoring/get-gpsinfo.php',
+								data:{id:'qianqian'},
+								type:'GET',
+								dataType:'json',
+								success:function(data){
+									lng = data.lng;
+									lat = data.lat;
+									var point1 = new BMap.Point(lng,lat);
+									var dis = map.getDistance(ePoint,point1).toFixed(2);
+									var isOut = parseFloat(dis)>parseFloat(setRadius)?true:false;
+									if(isOut){
+							    		$('#info').css('background','rgba(255,0,0,0.7)').html('出界啦！');
+							    	}else{
+							    		$('#info').css('background','rgba(0,255,0,0.7)').html('安全哦~');
+							    	};
+								},
+								error:function(){
+									
+								}
+							});
+						}
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			setInterval(function(){
+				alarminfo();
+			},1000);
+			//鼠标点击获取位置 测试模块
+			// map.addEventListener("click",function(e){
+			// 	alert(e.point.lng + "," + e.point.lat);
+			// });
+			// 设置电子围栏
+			$("#setElectronicFence").on('click',function(){
+				if(overlays.length!=0){
+					for(var i=0; i<overlays.length; i++){
+			    		map.removeOverlay(overlays[i]);	
+			    	};
+			    	overlays.length = 0;
+		    	};
+				$(this).css('background-color','#303030');
+				var lng = "";
+				var lat = "";
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-gpsinfo.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						map.clearOverlays();
+						lng = data.lng;
+						lat = data.lat;
+						var datetime = data.datetime;
+						var point1 = new BMap.Point(lng,lat);
+						var marker = new BMap.Marker(point1);
+						// 创建信息窗口
+						var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+			                    '当前位置经度为：'+ lng +'<br/>当前位置纬度为：'+ lat +'<br/>更新时间为：'+ datetime +
+			                  '</div>';
+			            var searchInfoWindow = null;
+						searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+								title  : "当前位置",      //标题
+								width  : 200,             //宽度
+								height : 65,              //高度
+								panel  : "panel",         //检索结果面板
+								enableAutoPan : true,     //自动平移
+								searchTypes   :[
+									BMAPLIB_TAB_SEARCH,   //周边检索
+									BMAPLIB_TAB_TO_HERE,  //到这里去
+									BMAPLIB_TAB_FROM_HERE //从这里出发
+								]
+							});        
+						map.addOverlay(marker);
+						map.panTo(point1); 
+						marker.addEventListener("click", function(e){
+						    searchInfoWindow.open(marker);
+					    });
+					    drawingManager.open();
+					},
+					error:function(){
+						
+					}
+				});
+			});
+			var newPoint = null;
+			var setRadius = "";
+			drawingManager.addEventListener('markercomplete',function(e,overlay){
+				overlays.push(overlay);         //不使用e.overlay
+				dialog({
+					title:"设置电子围栏半径",
+					content:$("#fense"),
+					okValue:"确定",
+					ok:function(){
+						var lng = e.point.lng;
+				    	var lat = e.point.lat;
+				  		newPoint = new BMap.Point(lng,lat);
+				  		var setRadius = $('#radius').val();
+				  		if(setRadius){
+				  			$.ajax({
+								url:'http://localhost/sleep-monitoring/set-electronic-fence.php',
+								data:{id:'qianqian',center_lng:lng,center_lat:lat,radius:setRadius},
+								type:'GET',
+								dataType:'json',
+								success:function(data){
+
+									if(data == '1'){
+										dialog({
+											title:"",
+											content:"<h4>电子围栏设置成功！</h4>",
+											okValue:"确定",
+											ok:function(){
+												var circle = new BMap.Circle(
+										    		newPoint,
+										    		setRadius,
+										    		{
+										    			strokeColor:"blue",
+										    			fillColor:"red",
+										    			strokeWeight:1,
+										    			strokeOpacity:0.1,
+										    			fillOpacity:0.2
+										    		}
+									    		);
+									    		map.addOverlay(circle);
+									    		overlays.push(circle);
+											},
+										}).showModal()
+									}
+								},
+								error:function(){
+									
+								}		
+							});
+				  		};
+						$("#setElectronicFence").css('background-color','#3d3d3d');
+						drawingManager.close();
+						flag = false;
+					},
+					cancelValue:"取消",
+					cancel:function(){
+						for(var i=0; i<overlays.length; i++){
+				    		map.removeOverlay(overlays[i]);	
+				    	};
+				    	overlays.length = 0;   //确定便于后期if的判断
+						$("#setElectronicFence").css('background-color','#3d3d3d');
+						drawingManager.close();
+					}
+				}).showModal();
+			});
+			function electronicfence(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-electronic-fence.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data){
+							// if(flag == true){
+								var lng = data.center_lng;
+						    	var lat = data.center_lat;
+						  		var newPoint = new BMap.Point(lng,lat);
+						  		var setRadius = data.radius;
+						  		var marker = new BMap.Marker(newPoint);    
+								map.addOverlay(marker);
+						  		var circle = new BMap.Circle(
+						    		newPoint,
+						    		setRadius,
+						    		{
+						    			strokeColor:"blue",
+						    			fillColor:"red",
+						    			strokeWeight:1,
+						    			strokeOpacity:0.1,
+						    			fillOpacity:0.2
+						    		}
+					    		);
+					    		map.addOverlay(circle);
+					    		overlays.push(circle);
+							// };
+						};
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			//重置电子围栏
+			$('#resetElectronicFence').on('click',function(){
+				$(this).css('background-color','#303030');
+				for(var i=0; i<overlays.length; i++){
+		    		map.removeOverlay(overlays[i]);	
+		    	};
+		    	overlays.length = 0;   //确定便于后期if的判断
+		    	$.ajax({
+					url:'http://localhost/sleep-monitoring/get-electronic-fence.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data == '0'){
+							dialog({
+								title:"",
+								content:"<h4>请先设置电子围栏！</h4>",
+								okValue:"确定",
+								ok:function(){
+								}
+							}).showModal();
+							$("#resetElectronicFence").css('background-color','#3d3d3d');
+						}else{
+							$.ajax({
+								url:'http://localhost/sleep-monitoring/set-electronic-fence.php',
+								data:{id:'qianqian',center_lng:'null',center_lat:'null',radius:'null'},
+								type:'GET',
+								dataType:'json',
+								success:function(data){
+									if(data == '1'){
+										dialog({
+											title:"",
+											content:"<h4>电子围栏重置成功！</h4>",
+											okValue:"确定",
+											ok:function(){
+											}
+										}).showModal();
+										$("#resetElectronicFence").css('background-color','#3d3d3d');
+									};
+								},
+								error:function(){
+									
+								}
+							});
+						}
+					},
+					error:function(){
+						
+					}		
+				});
+			});
+			//获取位置，设置地图中心点。
+			$("#search").on('click',function(){
+				var lng = "";
+				var lat = "";
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-gpsinfo.php',
+					data:{id:'qianqian'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						map.clearOverlays();
+						electronicfence();
+						lng = data.lng;
+						lat = data.lat;
+						var datetime = data.datetime;
+						var point1 = new BMap.Point(lng,lat);
+						// 原始坐标转成百度地图坐标 暂时只改这一处。
+						// var convertor = new BMap.Convertor();
+						// var pointArr = [];
+						// pointArr.push(point1);
+						// convertor.translate(pointArr,1,5,function(data){
+						// 	if(data.status == 0){
+						// 		var marker = new BMap.Marker(data.points[0]);
+						// 		map.addOverlay(marker);
+						// 		map.setCenter(data.points[0]);
+						// 	}
+						// });
+						var marker = new BMap.Marker(point1);
+						//创建信息窗口
+						var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+			                   '当前位置经度为：'+ lng +'<br/>当前位置纬度为：'+lat+'<br/>更新时间为：'+ datetime +
+			                  '</div>';
+			            var searchInfoWindow = null;
+						searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+								title  : "当前位置",      //标题
+								width  : 200,             //宽度
+								height : 65,              //高度
+								panel  : "panel",         //检索结果面板
+								enableAutoPan : true,     //自动平移
+								searchTypes   :[
+									BMAPLIB_TAB_SEARCH,   //周边检索
+									BMAPLIB_TAB_TO_HERE,  //到这里去
+									BMAPLIB_TAB_FROM_HERE //从这里出发
+								]
+							});    
+						map.addOverlay(marker);
+						map.panTo(point1);
+						marker.addEventListener("click", function(e){
+						    searchInfoWindow.open(marker);
+					    });
+
+					},
+					error:function(){
+						
+					}		
+				});
+			}); 
+		});
+	</script>
+</head>
+<body>
+	<header>
+		GPS位置信息
+		<a href="institutional-user.html">退出当前账户</a>
+	</header>
+	<aside>
+		<ul>
+			<li>
+				<span id="search">查看位置信息</span>
+			</li>
+			<li>
+				<span id="setElectronicFence">设置电子围栏</span>
+			</li>
+			<li>
+				<span id="resetElectronicFence">重置电子围栏</span>
+			</li>
+			<li>
+				<span id="setlocal">手环历史轨迹</span>
+			</li>
+		</ul>
+	</aside>
+	<div id="info"></div>
+	<div id="container"></div>
+	<div id="fense" style="display:none;">
+		<input type="text" id="radius" placeholder="输入围栏半径" class="form-control">
+	</div> 
+</body>
+</html>

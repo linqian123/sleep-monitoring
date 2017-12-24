@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>个人用户页面</title>
+	<link rel="stylesheet" href="ace/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="ace/css/font-awesome2.min.css" />
+	<link rel="stylesheet" href="ace/css/ace.min.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="ace/js/bootstrap.min.js"></script>
+	<script src="js/Chart.js"></script>
+	<style>
+		body,html,ul,li{
+			margin:0;
+			padding:0;
+		}
+		ul{list-style: none;}
+		.detail{
+			padding-bottom: 0px;
+		}
+		.detail > .row{
+			padding-top:5px;
+			padding-bottom:5px;
+			border:1px solid #666;
+		}
+		.week-data{
+			padding-left:0px;
+		}
+		#myTab{
+			height:20px;
+		}
+		#myTabContent{
+			padding-left: 60px;
+			width:450px;
+		}
+		#sleepreport .title{
+			font-weight: bold;
+		}
+		#sleepreport .data{
+			width:180px;
+			background-color: rgba(0,0,0,0.6);
+			color:white;
+			text-align: center;
+		}
+		.week-data h3{
+			padding-bottom:5px;
+		}
+		.alarm{
+			padding:20px;
+			padding-top: 10px;
+			padding-bottom: 3px;
+		}
+		.alarm h3{
+			padding-top: 5px;
+			padding-bottom: 0px;
+		}
+		.real-data{
+			padding-left: 15px;
+		}
+		.real-data li{
+			margin:15px;
+			margin-right: 0px;
+			margin-left:8px;
+		}
+		.real-data h3{
+			padding-bottom: 5px;
+		}
+		.real img{
+			width:70px;
+			height:70px;
+			border-radius: 50%;
+		}
+		.real span{
+			padding-left: 5px;
+			font-size: 15px;
+			font-weight: bold;
+		}
+	</style>
+	<script>
+		$(function(){
+			function currentTime(){ 
+			    var d=new Date(),str=''; 
+			    str+=d.getFullYear()+'年'; 
+			    str+=d.getMonth() + 1+'月'; 
+			    str+=d.getDate()+'日'; 
+			    str+=d.getHours()+'时'; 
+			    str+=d.getMinutes()+'分'; 
+			    return str; 
+			}; 
+			setInterval(function(){
+				$('#time').html(currentTime);
+			},1000);
+			function getWeekData_h(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/week-data.php',
+					data:{id:'qianqian',type:'heart'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						for(var key0 in data.data[0]){
+							var week_h0 = key0;
+							var week_h_d0 = data.data[0][key0];
+							if(week_h_d0 == 'null'){
+								week_h_d0 = 0;
+							};
+						};
+						for(var key1 in data.data[1]){
+							var week_h1 = key1;
+							var week_h_d1 = data.data[1][key1];
+							if(week_h_d1 == 'null'){
+								week_h_d1 = 0;
+							};
+						};
+						for(var key2 in data.data[2]){
+							var week_h2 = key2;
+							var week_h_d2 = data.data[2][key2];
+							if(week_h_d2 == 'null'){
+								week_h_d2 = 0;
+							};
+						};
+						for(var key3 in data.data[3]){
+							var week_h3 = key3;
+							var week_h_d3 = data.data[3][key3];
+							if(week_h_d3 == 'null'){
+								week_h_d3 = 0;
+							};
+						};
+						for(var key4 in data.data[4]){
+							var week_h4 = key4;
+							var week_h_d4 = data.data[4][key4];
+							if(week_h_d4 == 'null'){
+								week_h_d4 = 0;
+							};
+						};
+						for(var key5 in data.data[5]){
+							var week_h5 = key5;
+							var week_h_d5 = data.data[5][key5];
+							if(week_h_d5 == 'null'){
+								week_h_d5 = 0;
+							};
+						};
+						for(var key6 in data.data[6]){
+							var week_h6 = key6;
+							var week_h_d6 = data.data[6][key6];
+							if(week_h_d6 == 'null'){
+								week_h_d6 = 0;
+							};
+						};
+						var ctx_h = document.getElementById('myHeartChart').getContext('2d');
+						var chart_h = new Chart(ctx_h,{
+							type:'line',
+							data:{
+								labels:[week_h0,week_h1,week_h2,week_h3,week_h4,week_h5,week_h6],
+								datasets:[{
+									label:'心率周记录（次数/分钟）',
+									backgroundColor:'rgb(255,99,132)',
+									borderColor:'rgb(75,192,192)',
+									data:[week_h_d0,week_h_d1,week_h_d2,week_h_d3,week_h_d4,week_h_d5,week_h_d6],
+									fill:false,
+									lineTension:0.1
+								}]
+							},
+							options:{}
+						});
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function getWeekData_b(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/week-data.php',
+					data:{id:'qianqian',type:'breath'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						for(var key0 in data.data[0]){
+							var week_b0 = key0;
+							var week_b_d0 = data.data[0][key0];
+							if(week_b_d0 == 'null'){
+								week_b_d0 = 0;
+							};
+						};
+						for(var key1 in data.data[1]){
+							var week_b1 = key1;
+							var week_b_d1 = data.data[1][key1];
+							if(week_b_d1 == 'null'){
+								week_b_d1 = 0;
+							};
+						};
+						for(var key2 in data.data[2]){
+							var week_b2 = key2;
+							var week_b_d2 = data.data[2][key2];
+							if(week_b_d2 == 'null'){
+								week_b_d2 = 0;
+							};
+						};
+						for(var key3 in data.data[3]){
+							var week_b3 = key3;
+							var week_b_d3 = data.data[3][key3];
+							if(week_b_d3 == 'null'){
+								week_b_d3 = 0;
+							};
+						};
+						for(var key4 in data.data[4]){
+							var week_b4 = key4;
+							var week_b_d4 = data.data[4][key4];
+							if(week_b_d4 == 'null'){
+								week_b_d4 = 0;
+							};
+						};
+						for(var key5 in data.data[5]){
+							var week_b5 = key5;
+							var week_b_d5 = data.data[5][key5];
+							if(week_b_d5 == 'null'){
+								week_b_d5 = 0;
+							};
+						};
+						for(var key6 in data.data[6]){
+							var week_b6 = key6;
+							var week_b_d6 = data.data[6][key6];
+							if(week_b_d6 == 'null'){
+								week_b_d6 = 0;
+							};
+						};
+						var ctx_b = document.getElementById('myBreathChart').getContext('2d');
+						var chart_b = new Chart(ctx_b,{
+							type:'line',
+							data:{
+								labels:[week_b0,week_b1,week_b2,week_b3,week_b4,week_b5,week_b6],
+								datasets:[{
+									label:'呼吸周记录（次数/分钟）',
+									backgroundColor:'rgb(255,99,132)',
+									borderColor:'rgb(75,192,192)',
+									data:[week_b_d0,week_b_d1,week_b_d2,week_b_d3,week_b_d4,week_b_d5,week_b_d6],
+									fill:false,
+									lineTension:0.1
+								}]
+							},
+							options:{}
+						});
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function getWeekData_t(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/week-data.php',
+					data:{id:'qianqian',type:'turnover'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						for(var key0 in data.data[0]){
+							var week_t0 = key0;
+							var week_t_d0 = data.data[0][key0];
+							if(week_t_d0 == 'null'){
+								week_t_d0 = 0;
+							};
+						};
+						for(var key1 in data.data[1]){
+							var week_t1 = key1;
+							var week_t_d1 = data.data[1][key1];
+							if(week_t_d1 == 'null'){
+								week_t_d1 = 0;
+							};
+						};
+						for(var key2 in data.data[2]){
+							var week_t2 = key2;
+							var week_t_d2 = data.data[2][key2];
+							if(week_t_d2 == 'null'){
+								week_t_d2 = 0;
+							};
+						};
+						for(var key3 in data.data[3]){
+							var week_t3 = key3;
+							var week_t_d3 = data.data[3][key3];
+							if(week_t_d3 == 'null'){
+								week_t_d3 = 0;
+							};
+						};
+						for(var key4 in data.data[4]){
+							var week_t4 = key4;
+							var week_t_d4 = data.data[4][key4];
+							if(week_t_d4 == 'null'){
+								week_t_d4 = 0;
+							};
+						};
+						for(var key5 in data.data[5]){
+							var week_t5 = key5;
+							var week_t_d5 = data.data[5][key5];
+							if(week_t_d5 == 'null'){
+								week_t_d5 = 0;
+							};
+						};
+						for(var key6 in data.data[6]){
+							var week_t6 = key6;
+							var week_t_d6 = data.data[6][key6];
+							if(week_t_d6 == 'null'){
+								week_t_d6 = 0;
+							};
+						};
+						var ctx_t = document.getElementById('myTurnoverChart').getContext('2d');
+						var chart_t = new Chart(ctx_t,{
+							type:'line',
+							data:{
+								labels:[week_t0,week_t1,week_t2,week_t3,week_t4,week_t5,week_t6],
+								datasets:[{
+									label:'翻身次数周记录',
+									backgroundColor:'rgb(255,99,132)',
+									borderColor:'rgb(75,192,192)',
+									data:[week_t_d0,week_t_d1,week_t_d2,week_t_d3,week_t_d4,week_t_d5,week_t_d6],
+									fill:false,
+									lineTension:0.1
+								}]
+							},
+							options:{}
+						});
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			getWeekData_h();
+			getWeekData_b();
+			getWeekData_t();
+			var ctx_s = document.getElementById('sleeptime').getContext('2d');
+			var chart_s = new Chart(ctx_s,{
+				type:'bar',
+				data:{
+					labels:['深睡期','浅睡期','REMS期','觉醒期'],
+					datasets:[{
+						label:'睡眠时期百分比(%)',
+						backgroundColor:'rgb(203,221,230)',
+						borderColor:'rgb(75,192,192)',
+						data:[13.19,63.74,6.32,16.76],
+					}]
+				},
+				options:{}
+			});
+			function heart(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/realtime-data.php',
+					data:{id:'qianqian',type:'heart'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data.abnormal == '1'){
+							$('#realheart').html(data.data).css('color','red');	
+						}else{
+							$('#realheart').html(data.data);
+						}
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function breath(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/realtime-data.php',
+					data:{id:'qianqian',type:'breath'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data.abnormal == '1'){
+							$('#realbreath').html(data.data).css('color','red');
+						}else{
+							$('#realbreath').html(data.data);
+						};
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			// function turnover(){
+			// 	$.ajax({
+			// 		url:'http://localhost/wisdom-mattress/realtime-data.php',
+			// 		data:{id:'qianqian',type:'turnover'},
+			// 		type:'GET',
+			// 		dataType:'json',
+			// 		success:function(data){
+			// 			if(data.abnormal == '1'){
+			// 				$('#realturnover').html(data.data).css('color','red');
+			// 			}else{
+			// 				$('#realturnover').html(data.data);
+			// 			};
+						
+			// 		},
+			// 		error:function(){
+			// 			alert("Failed");
+			// 		}		
+			// 	});
+			// };
+			function status(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/realtime-data.php',
+					data:{id:'qianqian',type:'turnover'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data.status == '0'){
+							$('#realturnover').html('床上有人');
+						}else if(data.status == '1'){
+							$('#realturnover').html('挪动身体');
+						}else if(data.status == '2'){
+							$('#realturnover').html('床上没人');
+						}else if(data.status == '4'){
+							$('#realturnover').html('离床');
+						};
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function datetime(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/realtime-data.php',
+					data:{id:'qianqian',type:'turnover'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						$('#datetime').html(data.date);
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function preference_h(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-preference.php',
+					data:{id:'qianqian',type:'heart'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						$('#hmin').html(data.data.min);
+						$('#hmax').html(data.data.max);
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function preference_b(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-preference.php',
+					data:{id:'qianqian',type:'breath'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						$('#bmin').html(data.data.min);
+						$('#bmax').html(data.data.max);
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			function preference_t(){
+				$.ajax({
+					url:'http://localhost/sleep-monitoring/get-preference.php',
+					data:{id:'qianqian',type:'turnover'},
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						$('#tmin').html(data.data.min);
+						$('#tmax').html(data.data.max);
+					},
+					error:function(){
+						
+					}		
+				});
+			};
+			setInterval(function(){
+				preference_h();
+			},1000);
+			setInterval(function(){
+				preference_b();
+			},1000);
+			setInterval(function(){
+				preference_t();
+			},1000);
+			setInterval(function(){
+				heart();
+			},1000);
+			setInterval(function(){
+				breath();
+			},1000);
+			setInterval(function(){
+				status();
+			},1000);
+			setInterval(function(){
+				datetime();
+			},1000);
+		});
+	</script> 
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+		  	<div class="col-md-8">
+		  		<div class="detail">
+		  			<h3>睡眠质量分析：</h3>
+		  			<div class="row">
+		  				<div class="col-md-8">
+	  						<canvas id='sleeptime'></canvas>
+		  				</div>
+		  				<div class="col-md-4" id="sleepreport">
+		  					<ul>
+		  						<li>
+		  							<div class="title">床上时间(h)：</div>
+		  							<div class="data">3.03</div>
+		  						</li>
+		  						<li>
+		  							<div class="title">睡眠时间(h)：</div>
+		  							<div class="data">2.52</div>
+		  						</li>
+		  						<li>
+		  							<div class="title">睡眠效率：</div>
+		  							<div class="data">83.24%</div>
+		  						</li>
+		  						<li>
+		  							<div class="title">睡眠质量：</div>
+		  							<div class="data">
+		  								您的睡眠质量适中，可以适当调整睡眠时间来改善您的睡眠。
+		  							</div>
+		  						</li>
+		  					</ul>	
+		  				</div>
+		  			</div>
+		  		</div>
+		  		<div class="week-data">
+		  			<h3>周记录数据：</h3>
+		  			<ul class="nav nav-pills" id="myTab">
+					  <li role="presentation" class="active"><a href="#heart" data-toggle="tab">心率</a></li>
+					  <li role="presentation"><a href="#breath" data-toggle="tab">呼吸</a></li>
+					  <li role="presentation"><a href="#turnover" data-toggle="tab">翻身次数</a></li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div class="tab-pane fade in active" id="heart">
+							<canvas id='myHeartChart'></canvas>
+						</div>
+						<div class="tab-pane fade" id="breath">
+							<canvas id='myBreathChart'></canvas>
+						</div>
+						<div class="tab-pane fade" id="turnover">
+							<canvas id='myTurnoverChart'></canvas>
+						</div>
+					</div>
+		  		</div>
+		  	</div>
+		  	<div class="col-md-4">
+		  		<div class="alarm">
+		  			<h3>报警阈值：</h3>
+		  			<div class="panel panel-default">
+					  <table class="table table-striped table-bordered table-hover">
+					  		<thead>
+								<tr>
+									<th>###</th>
+									<th>心率</th>
+									<th>呼吸</th>
+									<th>翻身次数</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>min</td>
+									<td id="hmin">60</td>
+									<td id="bmin">16</td>
+									<td id="tmin">0</td>
+								</tr>
+								<tr>
+									<td>max</td>
+									<td id="hmax">100</td>
+									<td id="bmax">20</td>
+									<td id="tmax">26</td>
+								</tr>
+							</tbody>
+					  </table>
+					</div>
+		  		</div>
+		  		<div class="real-data">
+		  			<h3>实时数据：<span id="datetime" style="font-size:15px;"></span></h3>
+		  			<ul>
+		  				<li class="real">
+		  					<img src="imgs/13.png" alt="">
+							<span>心率：<span id="realheart">75</span>（次/每分钟）</span>
+		  				</li>
+		  				<li class="real">
+		  					<img src="imgs/12.png" alt="">
+							<span>呼吸：<span id="realbreath">14</span>（次/每分钟）</span>
+		  				</li>
+		  				<li class="real">
+		  					<img src="imgs/14.png" alt="">
+							<span>状态：<span id="realturnover">离床</span></span>
+		  				</li>
+		  			</ul>
+		  		</div>
+		  	</div>
+		</div>
+	</div>
+</body>
+</html>
